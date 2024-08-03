@@ -5,24 +5,23 @@ import { useEffect } from 'react'
 import HealthService from './services/HealthService'
 
 export const App = () => {
-
   useEffect(() => {
-    checkServerStatus();
-}, [])
+    checkServerStatus()
+  }, [])
 
-const checkServerStatus = async () => {
+  const checkServerStatus = async () => {
     try {
-        const response = await HealthService.health();
-        console.log(response)
+      const response = await HealthService.health()
+      console.log(response)
     } catch (e) {
-        console.error(e)
+      console.error(e)
     }
-}
+  }
 
   return (
     <Router>
       <Routes>
-        <Route path='/login' element={<Login />}></Route>
+        <Route path="/login" element={<Login />}></Route>
       </Routes>
     </Router>
   )

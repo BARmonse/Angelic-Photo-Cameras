@@ -1,11 +1,5 @@
-import { Box } from "@chakra-ui/react"
+import { Box } from '@chakra-ui/react'
 
 export const Login = () => {
-
-
-    return (
-        <Box>
-            Hola
-        </Box>
-    )
+  return <Box>Hola</Box>
 }
