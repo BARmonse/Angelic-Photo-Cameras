@@ -1,8 +1,12 @@
 import axiosClient from '../utils/GenericAxiosClient'
 
 const AuthenticationService = {
-  login: async (accessToken: string) => {
-    return axiosClient.post('/auth/login', accessToken)
+  login: async (accessToken: string): Promise<unknown> => {
+    return axiosClient.get('/auth/login', {
+      params: {
+        accessToken: accessToken,
+      },
+    })
   },
 }
 
