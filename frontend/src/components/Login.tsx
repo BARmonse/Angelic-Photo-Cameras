@@ -1,14 +1,20 @@
 import { Box, Button, Input } from '@chakra-ui/react'
 import { useState } from 'react'
 import AuthenticationService from '../services/AuthenticationService'
+import { useNavigate } from 'react-router-dom'
 
 export const Login = () => {
   const [personalAccessToken, setPersonalAccessToken] = useState<string>('')
+  const navigate = useNavigate()
 
   const login = async () => {
     try {
       const response = await AuthenticationService.login(personalAccessToken)
-      sessionStorage.setItem('accessToken', JSON.stringify(response))
+      sessionStorage.setItem(
+        'loggedUser',
+        JSON.stringify({ ...response, access_token: personalAccessToken }),
+      )
+      navigate('/shared-cameras')
     } catch (e) {
       console.error(e)
     }

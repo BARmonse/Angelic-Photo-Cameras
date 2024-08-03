@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Login } from './components/Login'
 import { useEffect } from 'react'
 import HealthService from './services/HealthService'
+import { SharedCameras } from './components/SharedCameras'
 
 export const App = () => {
   useEffect(() => {
@@ -21,7 +22,8 @@ export const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/shared-cameras" element={<SharedCameras />} />
       </Routes>
     </Router>
   )
