@@ -1,8 +1,8 @@
-import { LoggedUser } from '../interfaces/LoggedUser'
+import { User } from '../interfaces/User'
 import axiosClient from '../utils/GenericAxiosClient'
 
 const AuthenticationService = {
-  login: async (accessToken: string): Promise<LoggedUser> => {
+  login: async (accessToken: string): Promise<User> => {
     return axiosClient.get('/auth/login', {
       params: {
         accessToken: accessToken,
@@ -10,7 +10,7 @@ const AuthenticationService = {
     })
   },
 
-  getLoggedUser: (): LoggedUser | null => {
+  getLoggedUser: (): User | null => {
     const user = sessionStorage.getItem('loggedUser')
 
     if (!user) return null
