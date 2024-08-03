@@ -4,11 +4,11 @@ import requests
 
 from .clients.angelcam_client import Angelcam_client
 
-def health_view(request):
+def health_check(request):
     return HttpResponse("OK")
 
 @csrf_exempt
-def auth_view(request):
+def login(request):
     access_token = request.GET.get('accessToken')
     
     client = Angelcam_client(access_token)
@@ -20,3 +20,17 @@ def auth_view(request):
         return JsonResponse(response, safe=False)
     except requests.RequestException as e:
         return JsonResponse({'error': "Please check your personal access token"}, status=500)
+    
+@csrf_exempt
+def get_shared_cameras(request):
+    access_token = request.GET.get('accessToken')
+    
+    client = Angelcam_client(access_token)
+
+    print(client)
+        
+    try:
+        response = client.get('shared-cameras/')
+        return JsonResponse(response, safe=False)
+    except requests.RequestException as e:
+        return JsonResponse({'error': e}, status=500)

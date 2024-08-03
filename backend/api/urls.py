@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import health_view, auth_view
+from .views import health_check, login, get_shared_cameras
 
 urlpatterns = [
-    path("health/", health_view, name="health"),
-    path("auth/login", auth_view, name="login")
+    path("health/", health_check, name="health"),
+    path("auth/login", login, name="login"),
+    path("shared-cameras", get_shared_cameras, name="shared-cameras"),
 ]
