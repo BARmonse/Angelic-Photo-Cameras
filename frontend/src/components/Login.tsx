@@ -6,8 +6,12 @@ export const Login = () => {
   const [personalAccessToken, setPersonalAccessToken] = useState<string>('')
 
   const login = async () => {
-    const response = await AuthenticationService.login(personalAccessToken)
-    console.log(response)
+    try {
+      const response = await AuthenticationService.login(personalAccessToken)
+      sessionStorage.setItem('accessToken', JSON.stringify(response))
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (

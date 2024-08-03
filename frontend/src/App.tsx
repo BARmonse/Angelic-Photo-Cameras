@@ -12,7 +12,7 @@ export const App = () => {
   const checkServerStatus = async () => {
     try {
       const response = await HealthService.health()
-      console.log(response)
+      console.info('Connection status: ', response)
     } catch (e) {
       console.error(e)
     }

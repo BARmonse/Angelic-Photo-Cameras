@@ -19,4 +19,4 @@ def auth_view(request):
         response = client.get('me/')
         return JsonResponse(response, safe=False)
     except requests.RequestException as e:
-        return JsonResponse({'error': str(e)}, status=500)
+        return JsonResponse({'error': "Please check your personal access token"}, status=500)
