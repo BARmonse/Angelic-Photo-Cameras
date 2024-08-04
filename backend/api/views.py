@@ -33,7 +33,7 @@ def get_shared_cameras(request):
     
 
 @csrf_exempt
-def get_shared_camera_records(request, cameraId):
+def get_shared_camera_records(request, camera_id):
     access_token = request.GET.get('accessToken')
     start_date = request.GET.get('startDate')
     end_date = request.GET.get('endDate')
@@ -41,13 +41,13 @@ def get_shared_camera_records(request, cameraId):
     client = Angelcam_client(access_token)
 
     try:
-        response = client.get(f'shared-cameras/{cameraId}/recording/timeline', params= { "start": start_date, "end": end_date })
+        response = client.get(f'shared-cameras/{camera_id}/recording/timeline', params= { "start": start_date, "end": end_date })
         return JsonResponse(response, safe=False)
     except requests.RequestException as e:
         return JsonResponse({'error': e}, status=500)
     
 @csrf_exempt
-def get_shared_camera_record_stream(request, cameraId):
+def get_shared_camera_record_stream(request, camera_id):
     access_token = request.GET.get('accessToken')
     start_date = request.GET.get('startDate')
     end_date = request.GET.get('endDate')
@@ -55,7 +55,7 @@ def get_shared_camera_record_stream(request, cameraId):
     client = Angelcam_client(access_token)
 
     try:
-        response = client.get(f'shared-cameras/{cameraId}/recording/timeline', params = { "start": start_date, "end": end_date })
+        response = client.get(f'shared-cameras/{camera_id}/recording/timeline', params = { "start": start_date, "end": end_date })
         return JsonResponse(response, safe=False)
     except requests.RequestException as e:
         return JsonResponse({'error': e}, status=500)
