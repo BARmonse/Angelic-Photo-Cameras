@@ -12,8 +12,6 @@ def login(request):
     access_token = request.GET.get('accessToken')
     
     client = Angelcam_client(access_token)
-
-    print(client)
         
     try:
         response = client.get('me/')
@@ -26,11 +24,22 @@ def get_shared_cameras(request):
     access_token = request.GET.get('accessToken')
     
     client = Angelcam_client(access_token)
-
-    print(client)
         
     try:
         response = client.get('shared-cameras/')
+        return JsonResponse(response, safe=False)
+    except requests.RequestException as e:
+        return JsonResponse({'error': e}, status=500)
+    
+
+@csrf_exempt
+def get_shared_camera_records(request, cameraId):
+    access_token = request.GET.get('access_token')
+
+    client = Angelcam_client(access_token)
+
+    try:
+        response = client.get(f'shared-cameras/{cameraId}/recording/timeline')
         return JsonResponse(response, safe=False)
     except requests.RequestException as e:
         return JsonResponse({'error': e}, status=500)
