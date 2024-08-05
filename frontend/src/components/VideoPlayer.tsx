@@ -8,7 +8,7 @@ interface Props {
 
 const VideoPlayer = ({ format, url }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null)
-  // Used to handle mpeg files
+  // Used to handle mjpeg files
   const imageRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
@@ -31,6 +31,9 @@ const VideoPlayer = ({ format, url }: Props) => {
       if (videoRef.current) {
         const video = videoRef.current
         video.src = url
+        video.addEventListener('error', (e) => {
+          console.error('Error Message: ', e)
+        })
         video.addEventListener('canplay', () => {
           video.play()
         })
