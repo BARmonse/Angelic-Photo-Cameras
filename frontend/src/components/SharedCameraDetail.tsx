@@ -1,18 +1,29 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Modal, ModalContent, ModalOverlay } from '@chakra-ui/react'
 import { SharedCamera } from '../interfaces/SharedCamera'
 import VideoPlayer from './VideoPlayer'
+import { useState } from 'react'
+import { CameraStream } from '../interfaces/CameraStream'
 
 interface Props {
   camera: SharedCamera
 }
 
 export const SharedCameraDetail = ({ camera }: Props) => {
-  console.log(camera)
+  const [openModal, setOpenModal] = useState<boolean>(false)
+
+  const video: CameraStream = camera.streams.find(
+    (s) => s.format === 'hls' || s.format === 'mjpeg',
+  )
+
+  console.log(`Video of camera ${camera.name}: `, video)
+
+  const closeModal = () => {
+    setOpenModal(false)
+  }
+
   return (
     <Box
       sx={{
-        borderRadius: '25%',
-        border: `1px solid red`,
         flexDirection: 'column',
         fontWeight: 'bold',
       }}
@@ -26,12 +37,37 @@ export const SharedCameraDetail = ({ camera }: Props) => {
           border: `1px solid gray`,
           maxWidth: '20rem',
           maxHeight: '20rem',
+          cursor: 'pointer',
         }}
+        onClick={() => setOpenModal(true)}
       >
-        {camera.streams.map((stream) => (
-          <VideoPlayer format={stream.format} url={stream.url} />
-        ))}
+        <img src={camera.live_snapshot} />
       </Box>
+      <Modal isOpen={openModal} onClose={closeModal}>
+        <ModalContent>
+          {video && (
+            <Box
+              sx={{
+                backgroundColor: 'white',
+                width: '50%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <VideoPlayer format={video.format} url={video.url} />
+              </Box>
+            </Box>
+          )}
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }

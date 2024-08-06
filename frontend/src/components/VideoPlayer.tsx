@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import Hls from 'hls.js'
+import { Box } from '@chakra-ui/react'
 
 interface Props {
   format: string
@@ -55,13 +56,21 @@ const VideoPlayer = ({ format, url }: Props) => {
   }, [format, url])
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'white',
+        padding: 4,
+      }}
+    >
       {format === 'mjpeg' ? (
-        <img ref={imageRef} alt="MJPEG Stream" style={{ width: '100%' }} />
+        <img ref={imageRef} alt="MJPEG Stream" />
       ) : (
-        <video ref={videoRef} controls style={{ width: '100%' }} />
+        <video ref={videoRef} controls />
       )}
-    </div>
+    </Box>
   )
 }
 
