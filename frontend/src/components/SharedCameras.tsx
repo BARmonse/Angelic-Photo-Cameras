@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { SharedCamera } from '../interfaces/SharedCamera'
 import SharedCameraService from '../services/SharedCameraService'
 import AuthenticationService from '../services/AuthenticationService'
-import { SharedCameraDetail } from './SharedCameraDetail'
+import { SharedCameraPreview } from './SharedCameraPreview'
 
 export const SharedCameras = () => {
   const [sharedCameras, setSharedCameras] = useState<SharedCamera[]>([])
@@ -40,7 +40,7 @@ export const SharedCameras = () => {
         }}
       >
         {sharedCameras.map((sc) => (
-          <SharedCameraDetail camera={sc} />
+          <SharedCameraPreview key={sc.id} camera={sc} />
         ))}
       </Box>
     </Box>

@@ -15,6 +15,18 @@ const SharedCameraService = {
     })
   },
 
+  getSharedCamera: async (
+    accessToken: string,
+    cameraId: number,
+  ): Promise<SharedCamera> => {
+    return axiosClient.get('/shared-camera', {
+      params: {
+        accessToken: accessToken,
+        cameraId: cameraId,
+      },
+    })
+  },
+
   getSharedCameraRecords: async (
     accessToken: string,
     cameraId: number,

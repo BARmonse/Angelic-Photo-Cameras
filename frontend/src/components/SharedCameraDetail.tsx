@@ -1,73 +1,96 @@
-import { Box, Modal, ModalContent, ModalOverlay } from '@chakra-ui/react'
-import { SharedCamera } from '../interfaces/SharedCamera'
+import { Box, Button, Text } from '@chakra-ui/react'
 import VideoPlayer from './VideoPlayer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CameraStream } from '../interfaces/CameraStream'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { SharedCamera } from '../interfaces/SharedCamera'
+import SharedCameraService from '../services/SharedCameraService'
+import AuthenticationService from '../services/AuthenticationService'
+import { SlActionUndo } from 'react-icons/sl'
 
-interface Props {
-  camera: SharedCamera
-}
+export const SharedCameraDetail = () => {
+  const { search } = useLocation()
+  const params = new URLSearchParams(search)
+  const cameraId = params.get('id')
+  const [sharedCamera, setSharedCamera] = useState<SharedCamera>()
 
-export const SharedCameraDetail = ({ camera }: Props) => {
-  const [openModal, setOpenModal] = useState<boolean>(false)
+  const navigate = useNavigate()
 
-  const video: CameraStream = camera.streams.find(
+  const video: CameraStream | undefined = sharedCamera?.streams.find(
     (s) => s.format === 'hls' || s.format === 'mjpeg',
   )
 
-  console.log(`Video of camera ${camera.name}: `, video)
+  useEffect(() => {
+    const fetchSharedCamera = async () => {
+      const loggedUser = AuthenticationService.getLoggedUser()
 
-  const closeModal = () => {
-    setOpenModal(false)
-  }
+      if (!loggedUser || !loggedUser.access_token || !cameraId) return
+
+      const sc = await SharedCameraService.getSharedCamera(
+        loggedUser.access_token,
+        Number(cameraId),
+      )
+      setSharedCamera(sc)
+    }
+
+    fetchSharedCamera()
+  }, [cameraId])
 
   return (
     <Box
       sx={{
+        width: '100%',
+        display: 'flex',
         flexDirection: 'column',
-        fontWeight: 'bold',
       }}
     >
-      {camera.name}
       <Box
         sx={{
           display: 'flex',
-          gap: '.8rem',
-          padding: '1rem',
-          border: `1px solid gray`,
-          maxWidth: '20rem',
-          maxHeight: '20rem',
-          cursor: 'pointer',
+          flexDrection: 'row',
+          justifyContent: 'flex-start',
         }}
-        onClick={() => setOpenModal(true)}
       >
-        <img src={camera.live_snapshot} />
+        <Button
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '.5rem',
+          }}
+          onClick={() => navigate('/shared-cameras')}
+        >
+          <SlActionUndo />
+          <Text sx={{ color: 'gray', cursor: 'pointer' }}>
+            Return to shared cameras
+          </Text>
+        </Button>
       </Box>
-      <Modal isOpen={openModal} onClose={closeModal}>
-        <ModalContent>
-          {video && (
-            <Box
-              sx={{
-                backgroundColor: 'white',
-                width: '50%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <VideoPlayer format={video.format} url={video.url} />
-              </Box>
-            </Box>
-          )}
-        </ModalContent>
-      </Modal>
+
+      <Box
+        sx={{
+          flexDirection: 'column',
+          fontWeight: 'bold',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '.6rem',
+        }}
+      >
+        {sharedCamera?.name}
+        {video && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <VideoPlayer format={video.format} url={video.url} />
+          </Box>
+        )}
+      </Box>
     </Box>
   )
 }

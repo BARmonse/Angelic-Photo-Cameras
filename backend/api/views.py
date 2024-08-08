@@ -18,7 +18,20 @@ def login(request):
         return JsonResponse(response, safe=False)
     except requests.RequestException as e:
         return JsonResponse({'error': "Please check your personal access token"}, status=500)
-    
+
+@csrf_exempt
+def get_shared_camera(request):
+    access_token = request.GET.get('accessToken')
+    camera_id = request.GET.get('cameraId')
+
+    client = Angelcam_client(access_token)
+
+    try:
+        response = client.get(f'shared-cameras/{camera_id}/')
+        return JsonResponse(response, safe=False)
+    except requests.RequestException as e:
+        return JsonResponse({'error': e}, status=500)
+
 @csrf_exempt
 def get_shared_cameras(request):
     access_token = request.GET.get('accessToken')

@@ -62,7 +62,7 @@ const VideoPlayer = ({ format, url }: Props) => {
         width: '100%',
         height: '100%',
         backgroundColor: 'white',
-        padding: 4,
+        padding: 2,
       }}
     >
       {format === 'mjpeg' ? (
