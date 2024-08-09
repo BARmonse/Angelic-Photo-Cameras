@@ -35,7 +35,7 @@ export const SharedCameraDetail = () => {
       )
       setSharedCamera(sc)
 
-      const r = await RecordingService.getCameraRecordings(
+      const r = await SharedCameraService.getSharedCameraRecords(
         loggedUser.access_token,
         cameraId,
       )
