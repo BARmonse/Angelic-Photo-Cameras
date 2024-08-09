@@ -7,12 +7,15 @@ import { SharedCamera } from '../interfaces/SharedCamera'
 import SharedCameraService from '../services/SharedCameraService'
 import AuthenticationService from '../services/AuthenticationService'
 import { SlActionUndo } from 'react-icons/sl'
+import { CameraRecord } from '../interfaces/CameraRecord'
+import RecordingService from '../services/RecordingService'
 
 export const SharedCameraDetail = () => {
   const { search } = useLocation()
   const params = new URLSearchParams(search)
-  const cameraId = params.get('id')
+  const cameraId = Number(params.get('id'))
   const [sharedCamera, setSharedCamera] = useState<SharedCamera>()
+  const [records, setRecords] = useState<CameraRecord[]>([])
 
   const navigate = useNavigate()
 
@@ -21,19 +24,25 @@ export const SharedCameraDetail = () => {
   )
 
   useEffect(() => {
-    const fetchSharedCamera = async () => {
+    const fetchSharedCameraAndRecordings = async () => {
       const loggedUser = AuthenticationService.getLoggedUser()
 
       if (!loggedUser || !loggedUser.access_token || !cameraId) return
 
       const sc = await SharedCameraService.getSharedCamera(
         loggedUser.access_token,
-        Number(cameraId),
+        cameraId,
       )
       setSharedCamera(sc)
+
+      const r = await RecordingService.getCameraRecordings(
+        loggedUser.access_token,
+        cameraId,
+      )
+      console.log('Records: ', r)
     }
 
-    fetchSharedCamera()
+    fetchSharedCameraAndRecordings()
   }, [cameraId])
 
   return (

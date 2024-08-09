@@ -1,4 +1,3 @@
-import { CameraRecord } from '../interfaces/CameraRecord'
 import { CameraStreamRecording } from '../interfaces/CameraStreamRecording'
 import { PaginatedResult } from '../interfaces/PaginatedResult'
 import { SharedCamera } from '../interfaces/SharedCamera'
@@ -23,17 +22,6 @@ const SharedCameraService = {
       params: {
         accessToken: accessToken,
         cameraId: cameraId,
-      },
-    })
-  },
-
-  getSharedCameraRecords: async (
-    accessToken: string,
-    cameraId: number,
-  ): Promise<PaginatedResult<CameraRecord>> => {
-    return axiosClient.get(`/shared-cameras/recording/${cameraId}`, {
-      params: {
-        accessToken: accessToken,
       },
     })
   },
