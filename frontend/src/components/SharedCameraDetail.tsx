@@ -23,8 +23,6 @@ export const SharedCameraDetail = () => {
 
   const navigate = useNavigate()
 
-  console.log('sdasadsa: ', cameraRecord)
-
   const video: CameraStream | undefined = sharedCamera?.streams.find(
     (s) => s.format === 'hls' || s.format === 'mjpeg',
   )
