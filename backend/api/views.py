@@ -52,8 +52,8 @@ def get_shared_camera_records(request, camera_id):
     client = Angelcam_client(access_token)
 
     now = datetime.now(timezone.utc)
-    start_date = now - timedelta(days=1)
-    end_date = now
+    end_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    start_date = (end_date - timedelta(days=1))
 
     params = {
     "start": start_date.strftime('%Y-%m-%dT%H:%M:%S.000Z'),

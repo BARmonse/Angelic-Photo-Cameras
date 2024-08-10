@@ -21,7 +21,7 @@ export const Login = () => {
   }
 
   return (
-    <Box>
+    <Box sx={{ height: '10dvh%' }}>
       <Box>
         <Input
           value={personalAccessToken}

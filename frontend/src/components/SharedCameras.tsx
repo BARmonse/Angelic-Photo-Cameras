@@ -24,7 +24,14 @@ export const SharedCameras = () => {
   }, [])
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        gap: '1rem',
+        flexDirection: 'column',
+        height: '100dvh',
+      }}
+    >
       <Text sx={{ fontSize: '3rem' }}>Shared Cameras</Text>
       <Text sx={{ fontSize: '1.5rem' }}>
         {' '}
