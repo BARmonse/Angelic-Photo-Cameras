@@ -17,13 +17,16 @@ export const Login = () => {
       navigate('/shared-cameras')
     } catch (e) {
       console.error(e)
+      window.alert('Not a valid token')
     }
   }
 
   return (
-    <Box sx={{ height: '10dvh%' }}>
-      <Box>
+    <Box sx={{ height: '100dvh' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '.5rem' }}>
         <Input
+          placeholder="Enter your personal access token"
+          sx={{ width: '20%', border: '1px solid black' }}
           value={personalAccessToken}
           onChange={(e) => setPersonalAccessToken(e.target.value)}
         />
