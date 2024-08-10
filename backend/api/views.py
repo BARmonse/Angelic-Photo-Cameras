@@ -1,12 +1,10 @@
 from datetime import datetime, timezone, timedelta
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .decorators import token_required
 import requests
 
 from .clients.angelcam_client import Angelcam_client
 
-@csrf_exempt
 def login(request):
     access_token = request.GET.get('accessToken')
     
@@ -18,7 +16,6 @@ def login(request):
     except requests.RequestException as e:
         return JsonResponse({'error': "Please check your personal access token"}, status=500)
 
-@csrf_exempt
 @token_required
 def get_shared_camera(request):
     access_token = request.GET.get('accessToken')
@@ -32,7 +29,6 @@ def get_shared_camera(request):
     except requests.RequestException as e:
         return JsonResponse({'error': e}, status=500)
 
-@csrf_exempt
 @token_required
 def get_shared_cameras(request):
     access_token = request.GET.get('accessToken')
@@ -45,7 +41,6 @@ def get_shared_cameras(request):
     except requests.RequestException as e:
         return JsonResponse({'error': e}, status=500)
 
-@csrf_exempt
 @token_required
 def get_shared_camera_records(request, camera_id):
     access_token = request.GET.get('accessToken')
@@ -67,7 +62,6 @@ def get_shared_camera_records(request, camera_id):
     except requests.RequestException as e:
         return JsonResponse({'error': e}, status=500)
     
-@csrf_exempt
 @token_required
 def get_shared_camera_recording_stream(request, camera_id):
     access_token = request.GET.get('accessToken')
