@@ -51,8 +51,8 @@ def get_shared_camera_records(request, camera_id):
     client = Angelcam_client(access_token)
 
     params = {
-        "start": "2024-08-07T00:00:00.000Z",
-        "end": "2024-08-08T00:00:00.000Z"
+        "start": "2024-08-08T00:00:00.000Z",
+        "end": "2024-08-09T00:00:00.000Z"
     }
 
     try:

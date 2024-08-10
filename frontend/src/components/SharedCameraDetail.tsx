@@ -8,14 +8,13 @@ import SharedCameraService from '../services/SharedCameraService'
 import AuthenticationService from '../services/AuthenticationService'
 import { SlActionUndo } from 'react-icons/sl'
 import { CameraRecord } from '../interfaces/CameraRecord'
-import RecordingService from '../services/RecordingService'
 
 export const SharedCameraDetail = () => {
   const { search } = useLocation()
   const params = new URLSearchParams(search)
   const cameraId = Number(params.get('id'))
   const [sharedCamera, setSharedCamera] = useState<SharedCamera>()
-  const [records, setRecords] = useState<CameraRecord[]>([])
+  const [cameraRecord, setCameraRecord] = useState<CameraRecord>()
 
   const navigate = useNavigate()
 
@@ -39,7 +38,7 @@ export const SharedCameraDetail = () => {
         loggedUser.access_token,
         cameraId,
       )
-      console.log('Records: ', r)
+      setCameraRecord(r)
     }
 
     fetchSharedCameraAndRecordings()
@@ -51,6 +50,7 @@ export const SharedCameraDetail = () => {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
+        height: '100%',
       }}
     >
       <Box
@@ -99,6 +99,16 @@ export const SharedCameraDetail = () => {
             <VideoPlayer format={video.format} url={video.url} />
           </Box>
         )}
+      </Box>
+      <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
+        These are the recordings for today:
+        <Box sx={{ display: 'flex', gap: '.5rem', flexDirection: 'column' }}>
+          {cameraRecord?.segments.map((s) => (
+            <Text
+              sx={{ fontWeight: 'bold', cursor: 'pointer' }}
+            >{`- Record from ${s.start.toString()} to ${s.end.toString()}`}</Text>
+          ))}
+        </Box>
       </Box>
     </Box>
   )
