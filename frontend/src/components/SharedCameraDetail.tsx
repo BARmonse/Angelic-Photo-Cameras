@@ -23,6 +23,8 @@ export const SharedCameraDetail = () => {
 
   const navigate = useNavigate()
 
+  console.log('sdasadsa: ', cameraRecord)
+
   const video: CameraStream | undefined = sharedCamera?.streams.find(
     (s) => s.format === 'hls' || s.format === 'mjpeg',
   )
@@ -73,6 +75,17 @@ export const SharedCameraDetail = () => {
     fetchSharedCameraSegment()
   }, [cameraId, selectedSegment])
 
+  const formatTimestamp = (timestamp: Date) => {
+    const date = new Date(timestamp)
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const seconds = String(date.getSeconds()).padStart(2, '0')
+
+    return `${year}/${month}/${day}-${hours}:${minutes}:${seconds}`
+  }
   return (
     <Box
       sx={{
@@ -80,7 +93,6 @@ export const SharedCameraDetail = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        alignItems: 'center',
         gap: '2rem',
       }}
     >
@@ -125,33 +137,48 @@ export const SharedCameraDetail = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              width: '50%',
             }}
           >
             <VideoPlayer format={video.format} url={video.url} />
           </Box>
         )}
       </Box>
-      <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
+      {!cameraRecord || cameraRecord?.segments.length === 0 ? (
         <Text sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-          {' '}
-          These are the recordings for today:
+          Not available records
         </Text>
-        <Box sx={{ display: 'flex', gap: '.5rem', flexDirection: 'column' }}>
-          {cameraRecord?.segments.map((s) => (
-            <Text
-              sx={{ fontWeight: 'lighter', cursor: 'pointer' }}
-              onClick={() => setSelectedSegment(s)}
-            >{`- Record from ${s.start.toString()} to ${s.end.toString()}`}</Text>
-          ))}
+      ) : (
+        <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
+          <Text sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+            These are some of the recordings from yesterday:
+          </Text>
+          <Box sx={{ display: 'flex', gap: '.5rem', flexDirection: 'column' }}>
+            {cameraRecord?.segments.map((s, index) => (
+              <Text
+                key={index}
+                sx={{
+                  fontWeight: 'lighter',
+                  cursor: 'pointer',
+                  color: selectedSegment === s ? 'green' : 'inherit',
+                }}
+                onClick={() => setSelectedSegment(s)}
+              >
+                {' '}
+                {`- Record from ${formatTimestamp(s.start)} to ${formatTimestamp(s.end)}`}
+              </Text>
+            ))}
+          </Box>
         </Box>
-      </Box>
+      )}
+
       {cameraStreamRecording && (
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'center',
             flexDirection: 'column',
-            maxWidth: '25%',
+            alignSelf: 'center',
+            maxWidth: '50%',
           }}
         >
           <VideoPlayer
