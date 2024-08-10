@@ -11,7 +11,7 @@ const AuthenticationService = {
   },
 
   getLoggedUser: (): User | null => {
-    const user = sessionStorage.getItem('loggedUser')
+    const user = localStorage.getItem('loggedUser')
 
     if (!user) return null
 

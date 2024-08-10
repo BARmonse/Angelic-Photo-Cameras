@@ -10,7 +10,7 @@ export const Login = () => {
   const login = async () => {
     try {
       const response = await AuthenticationService.login(personalAccessToken)
-      sessionStorage.setItem(
+      localStorage.setItem(
         'loggedUser',
         JSON.stringify({ ...response, access_token: personalAccessToken }),
       )
