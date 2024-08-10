@@ -80,6 +80,8 @@ export const SharedCameraDetail = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        alignItems: 'center',
+        gap: '2rem',
       }}
     >
       <Box
@@ -130,21 +132,33 @@ export const SharedCameraDetail = () => {
         )}
       </Box>
       <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
-        These are the recordings for today:
+        <Text sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+          {' '}
+          These are the recordings for today:
+        </Text>
         <Box sx={{ display: 'flex', gap: '.5rem', flexDirection: 'column' }}>
           {cameraRecord?.segments.map((s) => (
             <Text
-              sx={{ fontWeight: 'bold', cursor: 'pointer' }}
+              sx={{ fontWeight: 'lighter', cursor: 'pointer' }}
               onClick={() => setSelectedSegment(s)}
             >{`- Record from ${s.start.toString()} to ${s.end.toString()}`}</Text>
           ))}
         </Box>
       </Box>
       {cameraStreamRecording && (
-        <VideoPlayer
-          format={cameraStreamRecording.format}
-          url={cameraStreamRecording.url}
-        />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            maxWidth: '25%',
+          }}
+        >
+          <VideoPlayer
+            format={cameraStreamRecording.format}
+            url={cameraStreamRecording.url}
+          />
+        </Box>
       )}
     </Box>
   )

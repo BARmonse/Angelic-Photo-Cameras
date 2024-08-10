@@ -1,3 +1,4 @@
+from datetime import datetime, timezone, timedelta
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 import requests
@@ -50,10 +51,14 @@ def get_shared_camera_records(request, camera_id):
 
     client = Angelcam_client(access_token)
 
+    now = datetime.now(timezone.utc)
+    start_date = now - timedelta(days=1)
+    end_date = now
+
     params = {
-        "start": "2024-08-08T00:00:00.000Z",
-        "end": "2024-08-09T00:00:00.000Z"
-    }
+    "start": start_date.strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+    "end": end_date.strftime('%Y-%m-%dT%H:%M:%S.000Z')
+}
 
     try:
         response = client.get(f'shared-cameras/{camera_id}/recording/timeline/', params=params)
