@@ -60,6 +60,25 @@ def get_shared_camera_records(request, camera_id):
         return JsonResponse(response, safe=False)
     except requests.RequestException as e:
         return JsonResponse({'error': e}, status=500)
+    
+@csrf_exempt
+def get_shared_camera_recording_stream(request, camera_id):
+    access_token = request.GET.get('accessToken')
+    start_date = request.GET.get('startDate')
+    end_date = request.GET.get('endDate')
+
+    client = Angelcam_client(access_token)
+
+    params = {
+        "start": start_date,
+        "end": end_date
+    }
+
+    try:
+        response = client.get(f'shared-cameras/{camera_id}/recording/stream/', params=params)
+        return JsonResponse(response, safe=False)
+    except requests.RequestException as e:
+        return JsonResponse({'error': e}, status=500)
 
 @csrf_exempt
 def get_camera_recordings(request, camera_id):
