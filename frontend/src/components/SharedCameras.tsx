@@ -1,11 +1,15 @@
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Button, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { SharedCamera } from '../interfaces/SharedCamera'
 import SharedCameraService from '../services/SharedCameraService'
 import AuthenticationService from '../services/AuthenticationService'
 import { SharedCameraPreview } from './SharedCameraPreview'
+import { useNavigate } from 'react-router-dom'
+import { HiOutlineLogout } from 'react-icons/hi'
 
 export const SharedCameras = () => {
+  const navigate = useNavigate()
+
   const [sharedCameras, setSharedCameras] = useState<SharedCamera[]>([])
 
   const fetchSharedCameras = async () => {
@@ -23,6 +27,11 @@ export const SharedCameras = () => {
     fetchSharedCameras()
   }, [])
 
+  const handleOnClickLogout = () => {
+    localStorage.clear()
+    navigate('/login')
+  }
+
   return (
     <Box
       sx={{
@@ -32,6 +41,20 @@ export const SharedCameras = () => {
         height: '100dvh',
       }}
     >
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <Button
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '.3rem',
+            justifyContent: 'center',
+          }}
+          onClick={handleOnClickLogout}
+        >
+          <HiOutlineLogout />
+          <Text>Logout</Text>
+        </Button>
+      </Box>
       <Text sx={{ fontSize: '3rem' }}>Shared Cameras</Text>
       <Text sx={{ fontSize: '1.5rem' }}>
         {' '}
