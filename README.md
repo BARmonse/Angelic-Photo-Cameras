@@ -3,8 +3,8 @@
 1. **Initialize the container with docker compose**
    ```bash
    sudo docker-compose up --build
-3. Go to http://localhost:5173/ in your web browser
-4. You must log in to the application using a personal access token
+3. **Go to http://localhost:5173/ in your web browser**
+4. **You must log in to the application using a personal access token**
 5. **When you are finished, shut down the containers**
    ```bash
    docker-compose down when you finish shutting down the containers
@@ -33,16 +33,16 @@
 
   **I used node version 20.16.0 for this part, but any version above 16.*.* should work.**
   
-1. Navigate into the frontend folder
+1. **Navigate into the frontend folder**
    ```bash
    cd ./frontend
-3. Install dependencies
+3. **Install dependencies**
    ```bash
    npm install
-5. Run the frontend
+5. **Run the frontend**
    ```bash
    npm run dev
-7. Navigate to http://localhost:5173/ in your web browser
+7. **Navigate to http://localhost:5173/ in your web browser**
 
 
   
