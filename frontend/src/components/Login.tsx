@@ -1,4 +1,4 @@
-import { Box, Button, Input } from '@chakra-ui/react'
+import { Box, Button, Input, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import AuthenticationService from '../services/AuthenticationService'
 import { useNavigate } from 'react-router-dom'
@@ -22,11 +22,26 @@ export const Login = () => {
   }
 
   return (
-    <Box sx={{ height: '100dvh' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '.5rem' }}>
+    <Box
+      sx={{
+        height: '100dvh',
+        display: 'flex',
+        gap: '2rem',
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      <Text sx={{ fontSize: '20px' }}>Angelical cameras</Text>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '.5rem',
+        }}
+      >
         <Input
-          placeholder="Enter your personal access token"
-          sx={{ width: '20%', border: '1px solid black' }}
+          placeholder="Use your personal access token"
+          sx={{ width: '100%', border: '1px solid black' }}
           value={personalAccessToken}
           onChange={(e) => setPersonalAccessToken(e.target.value)}
         />

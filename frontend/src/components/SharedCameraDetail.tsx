@@ -149,7 +149,8 @@ export const SharedCameraDetail = () => {
       ) : (
         <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
           <Text sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-            These are some of the recordings from yesterday:
+            These are some of the recordings from yesterday, click one to see
+            the record:
           </Text>
           <Box sx={{ display: 'flex', gap: '.5rem', flexDirection: 'column' }}>
             {cameraRecord?.segments.map((s, index) => (
