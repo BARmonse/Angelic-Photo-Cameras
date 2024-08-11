@@ -1,4 +1,4 @@
-### You can use docker-compose to initialize the application:
+# Run the application with docker containers:
 
 1. **Initialize the container with docker compose**
    ```bash
@@ -8,7 +8,7 @@
 5. docker-compose down when you finish shutting down the containers
 
 
-#### Running the Application Manually
+# Run the application Manually:
 
 ### Backend
 
