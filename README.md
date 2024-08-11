@@ -5,8 +5,9 @@
    sudo docker-compose up --build
 3. Go to http://localhost:5173/ in your web browser
 4. You must log in to the application using a personal access token
-5. docker-compose down when you finish shutting down the containers
-
+5. **When you are finished, shut down the containers**
+   ```bash
+   docker-compose down when you finish shutting down the containers
 
 # Run the application Manually:
 
