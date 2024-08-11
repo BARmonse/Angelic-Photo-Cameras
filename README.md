@@ -1,5 +1,7 @@
 ### You can use docker-compose to initialize the application:
-1. sudo docker-compose up --build
+
+1. ```bash
+   sudo docker-compose up --build`
 2. Go to http://localhost:5173/ in your web browser
 3. You must log into the application using a personal access token
 4. docker-compose down when you finish to shut down the containers
